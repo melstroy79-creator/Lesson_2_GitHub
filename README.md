@@ -41,7 +41,11 @@ set PYTHONIOENCODING=utf-8 && python main.py
 2. Выполнила `git init` и сделала первый коммит с `.gitignore` и `main.py`.
 3. Добавила функцию `farewell()` и вызвала её из `__main__` — второй коммит.
 4. Оформила этот `README.md` — третий коммит.
-5. Создала репозиторий на GitHub, привязала его как `origin` и отправила ветку `main`.
+5. Создала репозиторий на GitHub и привязала его как `origin`
+   (`git remote add origin https://github.com/melstroy79-creator/Lesson_2_GitHub.git`).
+6. Обнаружила, что на GitHub уже есть два коммита с другим содержимым,
+   и объединила обе истории через `git merge --allow-unrelated-histories`.
+7. Отправила ветку `main` на GitHub командой `git push -u origin main`.
 
 ## Что было сложным / что поняла
 
@@ -53,6 +57,12 @@ set PYTHONIOENCODING=utf-8 && python main.py
 - Кодировка вывода: русский текст в PowerShell 5.1 по умолчанию отображается
   некорректно. Помогла переменная `PYTHONIOENCODING=utf-8`.
 - Связка с GitHub: на этой машине не было `gh` и не было сохранённых учётных данных.
+- Конфликт при слиянии: на GitHub уже лежали свои коммиты, поэтому истории оказались
+  «не родственными». Обычный `git merge` их не объединяет и ругается на конфликт,
+  помогает только явный флаг `--allow-unrelated-histories`.
+  В `main.py` был конфликт `add/add` — оба файла добавлялись с нуля.
+  Решила в свою пользу через `git checkout --ours -- main.py`, потому что
+  версия `print("Hello, World!")` — это заготовка, а не результат задания.
 
 **Поняла:**
 
@@ -72,8 +82,13 @@ set PYTHONIOENCODING=utf-8 && python main.py
 ## История коммитов
 
 ```text
-9e01930  Initial commit: add greet() helper and .gitignore
+b60ed56  Merge remote-tracking branch 'origin/main'
+72c1965  Add README.md with project description and Git basics notes
 71c6ad7  Add farewell() function and call it from __main__
+9e01930  Initial commit: add greet() helper and .gitignore
 ```
 
-Подробный список: `git log --oneline`
+Коммиты `545773cAdd README.md` и `f9cfdf6 first commit` пришли с GitHub
+до начала работы и сохранены в merge-коммите `b60ed56`.
+
+Подробный список: `git log --oneline --graph`
